@@ -1,7 +1,22 @@
-<mat-toolbar class="header-bar">
-  <button class="main-btn" mat-button routerLink="/playground/landing"><i class="fa-solid fa-graduation-cap"></i>Learning Platform</button>
-  <span class="example-spacer"></span>
-  <button mat-button routerLink="/user/dashboard/all-courses" routerLinkActive="active">All Courses</button>
-  <button mat-button routerLink="/user/dashboard/my-courses" routerLinkActive="active">My Courses</button>
-  <button mat-flat-button class="logout-btn-color" (click)="logOut()">Logout</button>
-</mat-toolbar>
+<nav class="navbar navbar-expand-lg header-bar">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">  <button class="main-btn" mat-button routerLink="/playground/landing"><i class="fa-solid fa-graduation-cap"></i>Learning Platform</button>
+    </a>
+    <button class="navbar-toggler logout-btn-color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon "></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/user/dashboard/all-courses" routerLinkActive="active">All Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/user/dashboard/my-courses" routerLinkActive="active">My Enrollments</a>
+        </li>
+      </ul>
+      <div class="d-flex" role="search">
+        <button mat-button class="logout-btn-color" type="button" (click)="logOut()">LogOut</button>
+      </div>
+    </div>
+  </div>
+</nav>

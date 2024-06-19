@@ -8,7 +8,7 @@
       </div>
       <form [formGroup]="courseForm" (ngSubmit)="saveForm()">
         <div class="row">
-          <div class="col-12 col-lg-4 col-md-2">
+          <div class="col-12 col-lg-4 col-md-4">
             <mat-form-field class="w-100">
               <mat-label>Course Code</mat-label>
               <input matInput formControlName="courseCode">
@@ -18,7 +18,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-4 col-md-2">
+          <div class="col-12 col-lg-4 col-md-4">
             <mat-form-field class="w-100">
               <mat-label>Course Name</mat-label>
               <input matInput formControlName="courseName">
@@ -28,7 +28,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-4 col-md-2">
+          <div class="col-12 col-lg-4 col-md-4">
             <mat-form-field class="w-100">
               <mat-label>Course Fee</mat-label>
               <input matInput formControlName="courseFee">
@@ -49,7 +49,7 @@
 
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-4 col-md-2">
+          <div class="col-12 col-lg-4 col-md-4">
             <mat-form-field class="w-100">
               <mat-label>Course Start Date</mat-label>
               <input matInput formControlName="courseStartDate">
@@ -60,7 +60,7 @@
 
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-4 col-md-2">
+          <div class="col-12 col-lg-4 col-md-4">
             <mat-form-field class="w-100">
               <mat-label>Course End Date</mat-label>
               <input matInput formControlName="courseEndDate">
@@ -70,7 +70,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-4 col-md-2">
+          <div class="col-12 col-lg-4 col-md-4">
             <button mat-flat-button color="primary" class="w-100" type="submit" [disabled]="courseForm.invalid">Add
               Course
             </button>
