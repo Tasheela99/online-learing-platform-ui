@@ -13,6 +13,9 @@ import {SnackbarService} from "../../../../services/snackbar.service";
 import {ConfirmationDialogComponent} from "../../../../components/confirmation-dialog/confirmation-dialog.component";
 import {MatDivider} from "@angular/material/divider";
 
+import { ChangeDetectorRef} from '@angular/core';
+import { ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+
 @Component({
   selector: 'app-course-management',
   standalone: true,
@@ -31,7 +34,10 @@ import {MatDivider} from "@angular/material/divider";
     MatDivider
   ],
   templateUrl: './course-management.component.html',
-  styleUrl: './course-management.component.scss'
+  styleUrl: './course-management.component.scss',
+  providers:[
+    AdminService
+  ]
 })
 export class CourseManagementComponent implements OnInit {
 
@@ -39,7 +45,9 @@ export class CourseManagementComponent implements OnInit {
   courseList: Array<any> = [];
   searchId = '';
 
-  constructor(private adminService: AdminService, private snackBarService: SnackbarService, private dialog: MatDialog) {
+  constructor(private adminService: AdminService, private snackBarService: SnackbarService, private dialog: MatDialog , private cd: ChangeDetectorRef ) {
+
+
   }
 
   courseForm = new FormGroup({
@@ -51,9 +59,23 @@ export class CourseManagementComponent implements OnInit {
     courseEndDate: new FormControl('', [Validators.required]),
   });
 
+  @ViewChild('courseCodeInput', { static: true }) courseCodeInput!: ElementRef;
+
+  ngAfterViewInit() {
+    this.courseCodeInput.nativeElement.focus();
+  }
+
   ngOnInit() {
     this.loadAllCourses();
+    this.cd.detectChanges();
+
   }
+
+
+  test(){
+    this.loadAllCourses();
+  }
+
 
   saveForm() {
     if (this.courseForm.valid) {
@@ -74,11 +96,13 @@ export class CourseManagementComponent implements OnInit {
         control.markAsTouched();
       });
     }
+    this.loadAllCourses();
   }
 
   loadAllCourses() {
     this.adminService.findAll().subscribe(response => {
       this.courseList = response.data;
+      this.cd.detectChanges();
     });
   }
 
@@ -92,6 +116,7 @@ export class CourseManagementComponent implements OnInit {
         } else {
           this.courseList = [];
         }
+
       }, error => {
         this.courseList = [];
       });
@@ -106,9 +131,15 @@ export class CourseManagementComponent implements OnInit {
   }
 
   editCourse(course: any) {
-    this.dialog.open(EditCourseComponent, {
+    const dialogRef =  this.dialog.open(EditCourseComponent, {
       width: '400px',
       data: course
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        dialogRef.close(true);
+        this.loadAllCourses();
+      }
     });
   }
 
@@ -117,15 +148,17 @@ export class CourseManagementComponent implements OnInit {
       width: '400px',
       data: {
         title: 'Confirm Deletion',
-        message: `Are you sure you want to delete ?`
+        message: "Are you sure you want to delete ?"
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.adminService.delete(courseCode).subscribe(response => {
           this.snackBarService.snackBar("Course Deleted Successfully", "close", 5000, 'ltr', 'center', 'bottom');
-          if (response && response.status === true) {
-            this.loadCourses();
+          this.cd.detectChanges();
+          this.loadAllCourses();
+          if (response.status) {
+            this.loadAllCourses();
           }
         });
       }

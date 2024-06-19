@@ -12,6 +12,8 @@ import {ViewCourseEnrolmentComponent} from "../home/inner-items/view-course-enro
 import {SnackbarService} from "../../../../services/snackbar.service";
 import {ConfirmationDialogComponent} from "../../../../components/confirmation-dialog/confirmation-dialog.component";
 
+import {ChangeDetectorRef} from '@angular/core';
+
 @Component({
   selector: 'app-course-enrolment-management',
   standalone: true,
@@ -37,17 +39,19 @@ export class CourseEnrolmentManagementComponent implements OnInit {
   searchId = '';
   readonly dialog = inject(MatDialog);
 
-  constructor(private enrollmentService: EnrollmentService,private snackBarService:SnackbarService) {
+  constructor(private enrollmentService: EnrollmentService, private snackBarService: SnackbarService, private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.loadAllCourseEnrollments();
+    this.cd.detectChanges();
   }
 
   loadAllCourseEnrollments() {
     this.enrollmentService.getAllEnrollments().subscribe(
       (data: any) => {
         this.courseEnrollmentsList = data.data;
+        this.cd.detectChanges();
       },
       error => {
         console.error(error);
@@ -61,11 +65,13 @@ export class CourseEnrolmentManagementComponent implements OnInit {
       this.enrollmentService.getAllEnrollments().subscribe(response => {
         if (response && response.data) {
           this.courseEnrollmentsList = [response.data];
+          this.cd.detectChanges();
         } else {
           this.courseEnrollmentsList = [];
         }
       }, error => {
         this.courseEnrollmentsList = [];
+        this.cd.detectChanges();
       });
     }
   }
@@ -85,7 +91,7 @@ export class CourseEnrolmentManagementComponent implements OnInit {
     );
   }
 
-  viewCourseEnrollment(enrolment:any) {
+  viewCourseEnrollment(enrolment: any) {
     console.log(enrolment)
     this.dialog.open(ViewCourseEnrolmentComponent, {
       width: '400px',
@@ -93,7 +99,7 @@ export class CourseEnrolmentManagementComponent implements OnInit {
     });
   }
 
-  deleteCourseEnrollment(id:any) {
+  deleteCourseEnrollment(id: any) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
       data: {
@@ -105,9 +111,8 @@ export class CourseEnrolmentManagementComponent implements OnInit {
       if (result === true) { // User confirmed deletion
         this.enrollmentService.delete(id).subscribe(response => {
           this.snackBarService.snackBar("Enrollment Deleted Successfully", "close", 5000, 'ltr', 'center', 'bottom');
-          if (response && response.status === true) {
-            this.loadCourses();
-          }
+          this.cd.detectChanges();
+          this.loadAllCourseEnrollments()
         });
       }
     });

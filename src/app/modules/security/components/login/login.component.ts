@@ -35,7 +35,7 @@ export class LoginComponent {
   }
 
   form = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required,Validators.email]),
     password: new FormControl('', [Validators.required])
   })
 
@@ -68,17 +68,22 @@ export class LoginComponent {
     if (control?.hasError('required')) {
       return 'You must enter a value';
     }
-    if (control?.hasError('email')) {
-      return 'Not a valid email';
+    if (controlName === 'email') {
+      if (control?.hasError('email')) {
+        return 'Not a valid email';
+      }
     }
-    if (control?.hasError('minlength')) {
-      return 'Password must be at least 6 characters long';
+    if (controlName === 'password') {
+      if (control?.hasError('minlength')) {
+        return 'Password must be at least 6 characters long';
+      }
     }
     if (control?.hasError('pattern')) {
       return 'Not a valid mobile number';
     }
     return '';
   }
+
 
 
 }

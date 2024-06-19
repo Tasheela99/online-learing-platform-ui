@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
@@ -6,6 +6,7 @@ import {MatInput} from "@angular/material/input";
 import {AuthService} from "../../../../services/auth.service";
 import {Router, RouterLink} from "@angular/router";
 import {NgIf} from "@angular/common";
+import { ChangeDetectorRef} from '@angular/core';
 
 @Component({
   selector: 'app-register',
@@ -22,11 +23,12 @@ import {NgIf} from "@angular/common";
     MatError
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
 
-  constructor(private auth:AuthService,private router:Router) {
+  constructor(private auth:AuthService,private router:Router,private cd: ChangeDetectorRef)  {
   }
 
   form=new FormGroup({
@@ -58,15 +60,20 @@ export class RegisterComponent {
     if (control?.hasError('required')) {
       return 'You must enter a value';
     }
-    if (control?.hasError('email')) {
-      return 'Not a valid email';
+    if (controlName === 'email') {
+      if (control?.hasError('email')) {
+        return 'Not a valid email';
+      }
     }
-    if (control?.hasError('minlength')) {
-      return 'Password must be at least 6 characters long';
+    if (controlName === 'password') {
+      if (control?.hasError('minlength')) {
+        return 'Password must be at least 6 characters long';
+      }
     }
     if (control?.hasError('pattern')) {
       return 'Not a valid mobile number';
     }
     return '';
   }
+
 }

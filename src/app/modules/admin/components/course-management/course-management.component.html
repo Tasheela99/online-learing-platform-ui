@@ -52,7 +52,7 @@
           <div class="col-12 col-lg-4 col-md-4">
             <mat-form-field class="w-100">
               <mat-label>Course Start Date</mat-label>
-              <input matInput formControlName="courseStartDate">
+              <input matInput formControlName="courseStartDate" placeholder="2024-01-01">
               <mat-error
                 *ngIf="courseForm.get('courseStartDate')?.hasError('required') && (courseForm.get('courseStartDate')?.touched || courseForm.get('courseStartDate')?.dirty)">
                 Start Date is required
@@ -63,7 +63,7 @@
           <div class="col-12 col-lg-4 col-md-4">
             <mat-form-field class="w-100">
               <mat-label>Course End Date</mat-label>
-              <input matInput formControlName="courseEndDate">
+              <input matInput formControlName="courseEndDate" placeholder="2024-12-31">
               <mat-error
                 *ngIf="courseForm.get('courseEndDate')?.hasError('required') && (courseForm.get('courseEndDate')?.touched || courseForm.get('courseEndDate')?.dirty)">
                 End Date is required

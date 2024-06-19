@@ -40,8 +40,8 @@ export class EditCourseComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EditCourseComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private adminService:AdminService,
-    private snackBarService:SnackbarService
+    private adminService: AdminService,
+    private snackBarService: SnackbarService
   ) {
     this.editForm = new FormGroup({
       courseCode: new FormControl(data.courseCode, [Validators.required]),
@@ -57,20 +57,18 @@ export class EditCourseComponent implements OnInit {
   }
 
   submit(): void {
-    const courseCode=this.editForm.get('courseCode')?.value;
-    const courseName=this.editForm.get('courseName')?.value;
-    const courseFee=this.editForm.get('courseFee')?.value;
-    const courseDescription=this.editForm.get('courseDescription')?.value;
-    const courseStartDate=this.editForm.get('courseStartDate')?.value;
-    const courseEndDate=this.editForm.get('courseEndDate')?.value;
+    const courseCode = this.editForm.get('courseCode')?.value;
+    const courseName = this.editForm.get('courseName')?.value;
+    const courseFee = this.editForm.get('courseFee')?.value;
+    const courseDescription = this.editForm.get('courseDescription')?.value;
+    const courseStartDate = this.editForm.get('courseStartDate')?.value;
+    const courseEndDate = this.editForm.get('courseEndDate')?.value;
     if (this.editForm.valid) {
-      this.adminService.update(courseCode,courseName,courseFee,courseDescription,courseStartDate,courseEndDate)
+      this.adminService.update(courseCode, courseName, courseFee, courseDescription, courseStartDate, courseEndDate)
         .subscribe(response => {
           this.snackBarService.snackBar("Course Updated Successfully", "close", 5000, 'ltr', 'center', 'bottom');
-          if (response && response === true) {
-            this.dialogRef.close(true);
-          } else {
-          }
+
+          this.dialogRef.close(true);
         });
     }
   }

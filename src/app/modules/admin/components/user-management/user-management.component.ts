@@ -11,6 +11,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {EditUserComponent} from "../home/inner-items/edit-user/edit-user.component";
 import {ConfirmationDialogComponent} from "../../../../components/confirmation-dialog/confirmation-dialog.component";
 import {SnackbarService} from "../../../../services/snackbar.service";
+import {ChangeDetectorRef} from '@angular/core';
+
 
 @Component({
   selector: 'app-user-management',
@@ -34,22 +36,25 @@ export class UserManagementComponent implements OnInit {
   usersList: Array<any> = [];
   readonly dialog = inject(MatDialog);
 
-  constructor(private userService: UserService, private snackBarService: SnackbarService) {
+  constructor(private userService: UserService, private snackBarService: SnackbarService, private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.loadUsers();
+    this.cd.detectChanges();
   }
 
   loadUsers() {
     this.userService.getAll().subscribe(response => {
       if (response && response.data) {
         this.usersList = response.data;
+        this.cd.detectChanges();
       } else {
         this.usersList = [];
+        this.cd.detectChanges();
       }
     }, error => {
-      console.error('Error loading users:', error);
+      this.cd.detectChanges();
       this.usersList = [];
     });
   }
@@ -76,7 +81,6 @@ export class UserManagementComponent implements OnInit {
       width: '400px',
       data: user
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.loadUsers();
@@ -97,8 +101,9 @@ export class UserManagementComponent implements OnInit {
       if (result === true) {
         this.userService.delete(_id).subscribe(response => {
           this.snackBarService.snackBar("User Deleted Successfully", "close", 5000, 'ltr', 'center', 'bottom');
-          if (response && response.status === true) {
+          if (response.status) {
             this.loadUsers();
+            this.cd.detectChanges();
           }
         });
       }
