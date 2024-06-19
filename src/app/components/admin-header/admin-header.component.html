@@ -1,0 +1,8 @@
+<mat-toolbar class="header-bar">
+  <button class="main-btn" mat-button routerLink="/playground/landing"><i class="fa-solid fa-graduation-cap"></i>Learning Platform</button>
+  <span class="example-spacer"></span>
+  <button mat-button color="accent" routerLink="/admin/dashboard/courses" routerLinkActive="active">Course Management</button>
+  <button mat-button color="accent" routerLink="/admin/dashboard/course-enrolments" routerLinkActive="active">Course Enrollment Management</button>
+  <button mat-button color="accent" routerLink="/admin/dashboard/users" routerLinkActive="active">Users Management</button>
+  <button mat-flat-button class="logout-btn-color" (click)="logOut()">Logout</button>
+</mat-toolbar>

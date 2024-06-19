@@ -1,0 +1,23 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+.header-bar{
+  background-color: #222f3e;
+  color: black;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.login-btn-color {
+  background-color: #fed330 !important;
+  color: #222f3e!important;
+}
+.fa-solid{
+  color: #fed330;
+  font-size: 40px;
+}
+*,button{
+  font-family: "Play", sans-serif;
+  color: #fed330!important;
+}
+

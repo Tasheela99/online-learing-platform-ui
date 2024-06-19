@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Edit User Details</h1>
+<div mat-dialog-content>
+  <form [formGroup]="editForm" (ngSubmit)="submit()">
+    <mat-form-field class="w-100">
+      <mat-label>User Name</mat-label>
+      <input matInput formControlName="userName">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>User Mobile</mat-label>
+      <input matInput formControlName="mobile">
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit">Update User Details</button>
+  </form>
+</div>

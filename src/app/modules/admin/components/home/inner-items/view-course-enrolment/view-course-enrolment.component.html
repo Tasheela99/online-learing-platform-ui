@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="py-2 fw-bolder">{{ data.course?.courseName }}</mat-card-title>
+      <mat-card-subtitle> <p class="desc">{{ data.course?.courseDescription }}</p></mat-card-subtitle>
+
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>User Name: </strong>{{ data.user?.userName }}</p>
+      <p><strong>User Email: </strong>{{ data.user?.email }}</p>
+      <p><strong>User Mobile: </strong>{{ data.user?.mobile }}</p>
+      <p><strong>Payed Amount: </strong>LKR {{ data.course?.courseFee }} /=</p>
+      <p><strong>Enrolled Date: </strong>{{ data.enrolledDate | date}}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

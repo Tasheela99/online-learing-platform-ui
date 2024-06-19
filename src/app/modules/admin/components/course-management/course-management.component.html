@@ -1,0 +1,94 @@
+<div class="admin-home-outer">
+  <div class="admin-home-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Course Management</h3>
+        </div>
+      </div>
+      <form [formGroup]="courseForm" (ngSubmit)="saveForm()">
+        <div class="row">
+          <div class="col-12 col-lg-4 col-md-2">
+            <mat-form-field class="w-100">
+              <mat-label>Course Code</mat-label>
+              <input matInput formControlName="courseCode">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-4 col-md-2">
+            <mat-form-field  class="w-100">
+              <mat-label>Course Name</mat-label>
+              <input matInput formControlName="courseName">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-4 col-md-2">
+            <mat-form-field  class="w-100">
+              <mat-label>Course Fee</mat-label>
+              <input matInput formControlName="courseFee">
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="w-100">
+              <mat-label>Course Description</mat-label>
+              <textarea matInput formControlName="courseDescription"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-4 col-md-2">
+            <mat-form-field  class="w-100">
+              <mat-label>Course Start Date</mat-label>
+              <input matInput formControlName="courseStartDate">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-4 col-md-2">
+            <mat-form-field  class="w-100">
+              <mat-label>Course End Date</mat-label>
+              <input matInput formControlName="courseEndDate">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-4 col-md-2">
+            <button mat-flat-button color="primary" class="w-100" type="submit">Add Course</button>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field  class="w-100">
+            <mat-label>Find Course By Course Code</mat-label>
+            <input matInput [(ngModel)]="searchId" (keyup.enter)="loadCourses()">
+          </mat-form-field>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Course Code</th>
+          <th scope="col">Course Name</th>
+          <th scope="col">Course Fee</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Manage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let course of courseList">
+          <td>{{ course.courseCode }}</td>
+          <td>{{ course.courseName }}</td>
+          <td>{{ course.courseFee }}</td>
+          <td>{{ course.courseStartDate }}</td>
+          <td>{{ course.courseEndDate }}</td>
+          <td>
+            <button mat-icon-button (click)="viewCourse(course)">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <button mat-icon-button (click)="editCourse(course)">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button mat-icon-button (click)="deleteCourse(course.courseCode)">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

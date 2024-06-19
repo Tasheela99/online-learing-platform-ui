@@ -1,0 +1,28 @@
+.login-btn-color{
+  background-color: #fed330!important;
+  color:#4b6584!important;
+}
+
+.register-btn-color{
+  color: #fed330!important;
+  background-color: #4b6584!important;
+}
+
+
+*,h5{
+  font-family: "Play", sans-serif;
+}
+
+.outer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.bg-image{
+  background-image: url("https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7885.jpg?t=st=1718734244~exp=1718737844~hmac=c074e8ec2fcfe209cf3c108d76478846e210125be734d52e83722b99f810febf&w=826");
+  background-position: center;
+  background-repeat: no-repeat;
+}

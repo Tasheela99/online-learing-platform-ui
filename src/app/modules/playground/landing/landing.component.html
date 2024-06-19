@@ -1,0 +1,98 @@
+<app-header></app-header>
+
+
+<div class="main-slider-outer">
+  <div class="main-slider-inner">
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor="let slide of slidesStore">
+        <ng-template carouselSlide [id]="slide.id">
+          <img [src]="slide.src" [alt]="slide.alt" [title]="slide.title" class="slider-image">
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</div>
+<div class="section-title-outer">
+  <div class="section-title-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="text-center title-01">
+            What We Provide?
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="courses-intro-outer my-3">
+  <div class="courses-intro-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-lg-4 col-md-6 border border-dark icon-box d-flex align-items-center justify-content-center flex-column">
+          <i class=" fa-solid fa-book-open-reader"></i>
+          <p>Reading Materials</p>
+        </div>
+        <div class="col-12 col-lg-4 col-md-6 border border-dark icon-box d-flex align-items-center justify-content-center flex-column">
+          <i class=" fa-solid fa-video"></i>
+          <p>Video Tutorials</p>
+        </div>
+        <div class="col-12 col-lg-4 col-md-6 border border-dark icon-box d-flex align-items-center justify-content-center flex-column">
+          <i class=" fa-solid fa-graduation-cap"></i>
+          <p>Assessments</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-title-outer">
+  <div class="section-title-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="text-center title-01">
+            Enroll With Any Course
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="available-courses-outer">
+  <div class="available-courses-inner">
+    <div class="container">
+      <div class="row">
+        @for (course of courseList; track course) {
+          <div class="col-12 col-lg-3 col-md-6 my-3">
+            <mat-card class="example-card" appearance="outlined">
+              <mat-card-header>
+                <mat-card-title><h5>{{ course.courseName }}</h5></mat-card-title>
+                <mat-card-subtitle><p>Course Code {{ course.courseCode }}</p></mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p class="desc">
+                  {{course.courseDescription}}
+                </p>
+                <p>LKR {{course.courseFee}}</p>
+                <p class="date-style">Starting From {{course.courseStartDate}}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button routerLink="/security/login">Enroll Now</button>
+                <button mat-button>More Details</button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="image-bar-outer">
+  <div class="image-bar-inner">
+  </div>
+</div>
+
+<app-footer></app-footer>

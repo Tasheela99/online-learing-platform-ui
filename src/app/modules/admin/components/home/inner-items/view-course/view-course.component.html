@@ -1,0 +1,14 @@
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="py-2 fw-bold">{{ data.courseName }}</mat-card-title>
+      <mat-card-subtitle> <p> Course Code - {{ data.courseCode }}</p></mat-card-subtitle>
+      <mat-card-subtitle> <p class="desc">{{ data.courseDescription }}</p></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Fee: </strong>LKR {{ data.courseFee }} /=</p>
+      <p><strong>Start Date:</strong> {{ data.courseStartDate }}</p>
+      <p><strong>End Date:</strong> {{ data.courseEndDate }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

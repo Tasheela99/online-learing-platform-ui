@@ -1,0 +1,19 @@
+.footer-outer{
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #222f3e;
+
+  p{
+    margin: 0;
+    color: #fed330;
+  }
+
+  .fa-brands{
+    color: #fed330;
+    font-size: 25px;
+    margin: 10px;
+  }
+}

@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Edit Course Details</h1>
+<div mat-dialog-content>
+  <form [formGroup]="editForm" (ngSubmit)="submit()">
+    <mat-form-field class="w-100">
+      <mat-label>Course Code</mat-label>
+      <input matInput formControlName="courseCode">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Course Name</mat-label>
+      <input matInput formControlName="courseName">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Course Fee</mat-label>
+      <input matInput formControlName="courseFee">
+    </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Course Description</mat-label>
+        <textarea matInput formControlName="courseDescription"></textarea>
+      </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Course Start Date</mat-label>
+      <input matInput formControlName="courseStartDate">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Course End Date</mat-label>
+      <input matInput formControlName="courseEndDate">
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit">Update Course Details</button>
+  </form>
+</div>

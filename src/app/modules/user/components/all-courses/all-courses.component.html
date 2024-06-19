@@ -1,0 +1,35 @@
+<div class="available-courses-outer">
+  <div class="available-courses-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p class="dashboard-title">All Courses</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-3 col-md-6 my-3" *ngFor="let course of courseList">
+          <mat-card class="example-card" appearance="outlined">
+            <mat-card-header>
+              <mat-card-title><h5>{{ course.courseName }}</h5></mat-card-title>
+              <mat-card-subtitle><p>Course Code {{ course.courseCode }}</p></mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="desc">{{ course.courseDescription }}</p>
+              <p>LKR {{ course.courseFee }}</p>
+              <p class="date-style">Starting From {{ course.courseStartDate }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button
+                      [disabled]="course.enrolled"
+                      (click)="enrollForCourse(course)">
+                {{ course.enrolled ? 'Enrolled' : 'Enroll Now' }}
+              </button>
+              <button mat-button>More Details</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
