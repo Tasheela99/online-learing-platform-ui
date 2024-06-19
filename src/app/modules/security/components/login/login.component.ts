@@ -10,7 +10,6 @@ import {HttpResponse} from "@angular/common/http";
 import {CookiesService} from "../../../../services/cookies.service";
 import {NgIf} from "@angular/common";
 import {JwtDecoderService} from "../../../../services/jwt-decoder.service";
-import {routes} from "../../../../app.routes";
 
 @Component({
   selector: 'app-login',

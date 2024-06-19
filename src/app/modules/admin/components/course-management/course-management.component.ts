@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
@@ -93,7 +93,6 @@ export class CourseManagementComponent implements OnInit {
           this.courseList = [];
         }
       }, error => {
-        console.error('Error loading course:', error);
         this.courseList = [];
       });
     }

@@ -6,7 +6,6 @@ import {
   MatCardContent,
   MatCardHeader,
   MatCardModule,
-  MatCardTitle
 } from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
 import {PlaygroundService} from "../../../services/playground.service";

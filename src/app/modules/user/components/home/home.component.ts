@@ -8,10 +8,7 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from "@angular/material/card";
-import {PlaygroundService} from "../../../../services/playground.service";
 import {Router, RouterOutlet} from "@angular/router";
-import {EnrollmentService} from "../../../../services/enrollment.service";
-import {CookiesService} from "../../../../services/cookies.service";
 import {NgForOf} from "@angular/common";
 import {UserHeaderComponent} from "../../../../components/user-header/user-header.component";
 

@@ -50,7 +50,7 @@ export class AuthService {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) { // User confirmed logout
         this.cookiesService.deleteToken('token');
-        this.router.navigateByUrl('/security/login');
+        this.router.navigateByUrl('/playground/landing');
         this.snackBarService.snackBar("Come Back Again...", "close", 5000, 'ltr', 'center', 'bottom');
       }
     });

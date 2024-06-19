@@ -1,14 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {DatePipe, NgForOf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
-import {AdminService} from "../../../../services/admin.service";
-import {ViewCourseComponent} from "../home/inner-items/view-course/view-course.component";
-import {EditCourseComponent} from "../home/inner-items/edit-course/edit-course.component";
 import {EnrollmentService} from "../../../../services/enrollment.service";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {ViewCourseEnrolmentComponent} from "../home/inner-items/view-course-enrolment/view-course-enrolment.component";
@@ -68,7 +65,6 @@ export class CourseEnrolmentManagementComponent implements OnInit {
           this.courseEnrollmentsList = [];
         }
       }, error => {
-        console.error('Error loading course:', error);
         this.courseEnrollmentsList = [];
       });
     }

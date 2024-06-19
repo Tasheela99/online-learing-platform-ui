@@ -101,27 +101,4 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  viewCourse(course: any) {
-    this.dialog.open(ViewCourseComponent, {
-      width: 'auto',
-      data: course
-    });
-  }
-
-  editCourse(course: any) {
-    this.dialog.open(EditCourseComponent, {
-      width: '400px',
-      data: course
-    });
-  }
-
-  deleteCourse(courseCode: any) {
-    if (confirm('Are you sure you want to delete course: ' + courseCode + '?')) {
-      this.adminService.delete(courseCode).subscribe(response => {
-        if (response && response.status === true) {
-          this.loadAllCourses();
-        }
-      });
-    }
-  }
 }
