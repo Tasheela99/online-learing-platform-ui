@@ -1,15 +1,17 @@
 # Online Learning Platform Ui
 
+
 ## 01.Run npm install
-  to install the dependencies
+    type npm install to install the dependencies
 
-## 02.Run ng serve
-  to run the application
+    npm install
 
-application runs on http://localhost:4200 port
+## 02.Run The application
+    tyoe ng serve in the integrated terminal to run the angular application
 
-## 03.Admin Credentials
+    ng serve
 
-email - tasheelajay1999@gmail.com
+## 03.Application Runs On Server Port 4200
+    the terminal shows below text when server is running
 
-password - admin123
+    http://localhost:4200
