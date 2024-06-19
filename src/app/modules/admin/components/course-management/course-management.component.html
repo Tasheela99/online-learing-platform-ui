@@ -12,83 +12,116 @@
             <mat-form-field class="w-100">
               <mat-label>Course Code</mat-label>
               <input matInput formControlName="courseCode">
+              <mat-error
+                *ngIf="courseForm.get('courseCode')?.hasError('required') && (courseForm.get('courseCode')?.touched || courseForm.get('courseCode')?.dirty)">
+                Course Code is required
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-4 col-md-2">
-            <mat-form-field  class="w-100">
+            <mat-form-field class="w-100">
               <mat-label>Course Name</mat-label>
               <input matInput formControlName="courseName">
+              <mat-error
+                *ngIf="courseForm.get('courseName')?.hasError('required') && (courseForm.get('courseName')?.touched || courseForm.get('courseName')?.dirty)">
+                Course Name is required
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-4 col-md-2">
-            <mat-form-field  class="w-100">
+            <mat-form-field class="w-100">
               <mat-label>Course Fee</mat-label>
               <input matInput formControlName="courseFee">
+              <mat-error
+                *ngIf="courseForm.get('courseFee')?.hasError('required') && (courseForm.get('courseFee')?.touched || courseForm.get('courseFee')?.dirty)">
+                Course Fee is required
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="col-12">
             <mat-form-field class="w-100">
               <mat-label>Course Description</mat-label>
               <textarea matInput formControlName="courseDescription"></textarea>
+              <mat-error
+                *ngIf="courseForm.get('courseDescription')?.hasError('required') && (courseForm.get('courseDescription')?.touched || courseForm.get('courseDescription')?.dirty)">
+                Course Description is required
+              </mat-error>
+
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-4 col-md-2">
-            <mat-form-field  class="w-100">
+            <mat-form-field class="w-100">
               <mat-label>Course Start Date</mat-label>
               <input matInput formControlName="courseStartDate">
+              <mat-error
+                *ngIf="courseForm.get('courseStartDate')?.hasError('required') && (courseForm.get('courseStartDate')?.touched || courseForm.get('courseStartDate')?.dirty)">
+                Start Date is required
+              </mat-error>
+
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-4 col-md-2">
-            <mat-form-field  class="w-100">
+            <mat-form-field class="w-100">
               <mat-label>Course End Date</mat-label>
               <input matInput formControlName="courseEndDate">
+              <mat-error
+                *ngIf="courseForm.get('courseEndDate')?.hasError('required') && (courseForm.get('courseEndDate')?.touched || courseForm.get('courseEndDate')?.dirty)">
+                End Date is required
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-4 col-md-2">
-            <button mat-flat-button color="primary" class="w-100" type="submit">Add Course</button>
+            <button mat-flat-button color="primary" class="w-100" type="submit" [disabled]="courseForm.invalid">Add
+              Course
+            </button>
           </div>
         </div>
       </form>
+
+      <div class="py-4"></div>
+
       <div class="row">
         <div class="col-12">
-          <mat-form-field  class="w-100">
+          <mat-form-field class="w-100">
             <mat-label>Find Course By Course Code</mat-label>
-            <input matInput [(ngModel)]="searchId" (keyup.enter)="loadCourses()">
+            <input matInput [(ngModel)]="searchId" (keyup.enter)="loadCourses()" placeholder="Ex.1">
           </mat-form-field>
         </div>
       </div>
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">Course Code</th>
-          <th scope="col">Course Name</th>
-          <th scope="col">Course Fee</th>
-          <th scope="col">Start Date</th>
-          <th scope="col">End Date</th>
-          <th scope="col">Manage</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let course of courseList">
-          <td>{{ course.courseCode }}</td>
-          <td>{{ course.courseName }}</td>
-          <td>{{ course.courseFee }}</td>
-          <td>{{ course.courseStartDate }}</td>
-          <td>{{ course.courseEndDate }}</td>
-          <td>
-            <button mat-icon-button (click)="viewCourse(course)">
-              <i class="fa-solid fa-bars"></i>
-            </button>
-            <button mat-icon-button (click)="editCourse(course)">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button mat-icon-button (click)="deleteCourse(course.courseCode)">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="table-outer">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Course Code</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Course Fee</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Manage</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let course of courseList">
+            <td>{{ course.courseCode }}</td>
+            <td>{{ course.courseName }}</td>
+            <td>{{ course.courseFee }}</td>
+            <td>{{ course.courseStartDate }}</td>
+            <td>{{ course.courseEndDate }}</td>
+            <td>
+              <button mat-icon-button (click)="viewCourse(course)">
+                <i class="fa-solid fa-bars"></i>
+              </button>
+              <button mat-icon-button (click)="editCourse(course)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button mat-icon-button (click)="deleteCourse(course.courseCode)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

@@ -9,6 +9,8 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {UserService} from "../../../../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {EditUserComponent} from "../home/inner-items/edit-user/edit-user.component";
+import {ConfirmationDialogComponent} from "../../../../components/confirmation-dialog/confirmation-dialog.component";
+import {SnackbarService} from "../../../../services/snackbar.service";
 
 @Component({
   selector: 'app-user-management',
@@ -32,7 +34,7 @@ export class UserManagementComponent implements OnInit {
   usersList: Array<any> = [];
   readonly dialog = inject(MatDialog);
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private snackBarService: SnackbarService) {
   }
 
   ngOnInit() {
@@ -83,17 +85,24 @@ export class UserManagementComponent implements OnInit {
   }
 
   deleteUser(_id: any) {
-    if (confirm('Are you sure you want to delete this User?')) {
-      this.userService.delete(_id).subscribe(response => {
-        if (response && response.status === true) {
-          this.loadUsers();
-        } else {
-          console.error('Failed to delete user');
-        }
-      }, error => {
-        console.error('Error deleting user:', error);
-      });
-    }
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirm Deletion',
+        message: `Are you sure you want to delete ?`
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.userService.delete(_id).subscribe(response => {
+          this.snackBarService.snackBar("User Deleted Successfully", "close", 5000, 'ltr', 'center', 'bottom');
+          if (response && response.status === true) {
+            this.loadUsers();
+          }
+        });
+      }
+    });
   }
 
 }

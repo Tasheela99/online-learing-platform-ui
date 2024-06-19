@@ -13,6 +13,7 @@ import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {AdminService} from "../../../../../../services/admin.service";
 import {HttpClientModule} from "@angular/common/http";
+import {SnackbarService} from "../../../../../../services/snackbar.service";
 
 @Component({
   selector: 'app-edit-course',
@@ -39,7 +40,8 @@ export class EditCourseComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EditCourseComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private adminService:AdminService
+    private adminService:AdminService,
+    private snackBarService:SnackbarService
   ) {
     this.editForm = new FormGroup({
       courseCode: new FormControl(data.courseCode, [Validators.required]),
@@ -64,6 +66,7 @@ export class EditCourseComponent implements OnInit {
     if (this.editForm.valid) {
       this.adminService.update(courseCode,courseName,courseFee,courseDescription,courseStartDate,courseEndDate)
         .subscribe(response => {
+          this.snackBarService.snackBar("Course Updated Successfully", "close", 5000, 'ltr', 'center', 'bottom');
           if (response && response === true) {
             this.dialogRef.close(true);
           } else {

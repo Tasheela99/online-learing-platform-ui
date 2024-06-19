@@ -1,39 +1,45 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton, MatIconButton} from "@angular/material/button";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {AdminService} from "../../../../services/admin.service";
 import {ViewCourseComponent} from "../home/inner-items/view-course/view-course.component";
 import {EditCourseComponent} from "../home/inner-items/edit-course/edit-course.component";
+import {SnackbarService} from "../../../../services/snackbar.service";
+import {ConfirmationDialogComponent} from "../../../../components/confirmation-dialog/confirmation-dialog.component";
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
   selector: 'app-course-management',
   standalone: true,
-    imports: [
-        FormsModule,
-        MatButton,
-        MatFormField,
-        MatIcon,
-        MatIconButton,
-        MatInput,
-        MatLabel,
-        NgForOf,
-        ReactiveFormsModule
-    ],
+  imports: [
+    FormsModule,
+    MatButton,
+    MatFormField,
+    MatIcon,
+    MatIconButton,
+    MatInput,
+    MatLabel,
+    NgForOf,
+    ReactiveFormsModule,
+    NgIf,
+    MatError,
+    MatDivider
+  ],
   templateUrl: './course-management.component.html',
   styleUrl: './course-management.component.scss'
 })
-export class CourseManagementComponent implements OnInit{
+export class CourseManagementComponent implements OnInit {
 
+  date!: Date;
   courseList: Array<any> = [];
   searchId = '';
-  readonly dialog = inject(MatDialog);
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private snackBarService: SnackbarService, private dialog: MatDialog) {
   }
 
   courseForm = new FormGroup({
@@ -45,20 +51,29 @@ export class CourseManagementComponent implements OnInit{
     courseEndDate: new FormControl('', [Validators.required]),
   });
 
-  saveForm() {
-    const courseCode = this.courseForm.get('courseCode')?.value;
-    const courseName = this.courseForm.get('courseName')?.value;
-    const courseFee = this.courseForm.get('courseFee')?.value;
-    const courseDescription = this.courseForm.get('courseDescription')?.value;
-    const courseStartDate = this.courseForm.get('courseStartDate')?.value;
-    const courseEndDate = this.courseForm.get('courseEndDate')?.value;
-    this.adminService.create(courseCode, courseName, courseFee, courseDescription, courseStartDate, courseEndDate).subscribe(response => {
-      this.loadAllCourses();
-    });
-  }
-
   ngOnInit() {
     this.loadAllCourses();
+  }
+
+  saveForm() {
+    if (this.courseForm.valid) {
+      const {
+        courseCode,
+        courseName,
+        courseFee,
+        courseDescription,
+        courseStartDate,
+        courseEndDate
+      } = this.courseForm.value;
+      this.adminService.create(courseCode, courseName, courseFee, courseDescription, courseStartDate, courseEndDate).subscribe(response => {
+        this.snackBarService.snackBar("Course Added Successfully", "close", 5000, 'ltr', 'center', 'bottom');
+        this.loadAllCourses();
+      });
+    } else {
+      Object.values(this.courseForm.controls).forEach(control => {
+        control.markAsTouched();
+      });
+    }
   }
 
   loadAllCourses() {
@@ -99,13 +114,24 @@ export class CourseManagementComponent implements OnInit{
   }
 
   deleteCourse(courseCode: any) {
-    if (confirm('Are you sure you want to delete course: ' + courseCode + '?')) {
-      this.adminService.delete(courseCode).subscribe(response => {
-        if (response && response.status === true) {
-          this.loadAllCourses();
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirm Deletion',
+        message: `Are you sure you want to delete ?`
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.adminService.delete(courseCode).subscribe(response => {
+          this.snackBarService.snackBar("Course Deleted Successfully", "close", 5000, 'ltr', 'center', 'bottom');
+          if (response && response.status === true) {
+            this.loadCourses();
+          }
+        });
+      }
+    });
   }
+
 
 }

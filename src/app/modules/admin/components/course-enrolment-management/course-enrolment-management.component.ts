@@ -12,6 +12,8 @@ import {EditCourseComponent} from "../home/inner-items/edit-course/edit-course.c
 import {EnrollmentService} from "../../../../services/enrollment.service";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {ViewCourseEnrolmentComponent} from "../home/inner-items/view-course-enrolment/view-course-enrolment.component";
+import {SnackbarService} from "../../../../services/snackbar.service";
+import {ConfirmationDialogComponent} from "../../../../components/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'app-course-enrolment-management',
@@ -38,7 +40,7 @@ export class CourseEnrolmentManagementComponent implements OnInit {
   searchId = '';
   readonly dialog = inject(MatDialog);
 
-  constructor(private enrollmentService: EnrollmentService) {
+  constructor(private enrollmentService: EnrollmentService,private snackBarService:SnackbarService) {
   }
 
   ngOnInit() {
@@ -58,7 +60,6 @@ export class CourseEnrolmentManagementComponent implements OnInit {
 
   loadCourses() {
     if (this.searchId.trim() === '') {
-
     } else {
       this.enrollmentService.getAllEnrollments().subscribe(response => {
         if (response && response.data) {
@@ -76,14 +77,14 @@ export class CourseEnrolmentManagementComponent implements OnInit {
   toggleEnrollmentState(_id: string, checked: boolean) {
     this.enrollmentService.changeEnrollmentState(_id, checked).subscribe(
       (data: any) => {
-        console.log('Enrollment state updated successfully:', data.message);
+        this.snackBarService.snackBar("Enrollment Status Updated Successfully", "close", 5000, 'ltr', 'center', 'bottom');
         const enrollmentToUpdate = this.courseEnrollmentsList.find(enrollment => enrollment._id === _id);
         if (enrollmentToUpdate) {
           enrollmentToUpdate.enrolledState = checked;
         }
       },
       error => {
-        console.error('Error updating enrollment state:', error);
+        this.snackBarService.snackBar("Error Updating Enrollment Status", "close", 5000, 'ltr', 'center', 'bottom');
       }
     );
   }
@@ -97,12 +98,22 @@ export class CourseEnrolmentManagementComponent implements OnInit {
   }
 
   deleteCourseEnrollment(id:any) {
-    if (confirm('Are you sure you want to delete course: ' + id + '?')) {
-      this.enrollmentService.delete(id).subscribe(response => {
-        if (response && response.status === true) {
-          this.loadCourses();
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirm Deletion',
+        message: `Are you sure you want to delete ?`
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) { // User confirmed deletion
+        this.enrollmentService.delete(id).subscribe(response => {
+          this.snackBarService.snackBar("Enrollment Deleted Successfully", "close", 5000, 'ltr', 'center', 'bottom');
+          if (response && response.status === true) {
+            this.loadCourses();
+          }
+        });
+      }
+    });
   }
 }
